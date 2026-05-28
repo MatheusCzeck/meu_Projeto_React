@@ -1,108 +1,97 @@
 // src/LoginForm.jsx
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { Box, Card, CardContent, Typography, TextField, Button, Stack } from '@mui/material';
 
-function LoginForm() {
-  // 1. Criação dos estados para armazenar o login e a senha
+function LoginForm(props) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  // 2. Função disparada ao clicar no botão de enviar
   const handleSubmit = (event) => {
-    event.preventDefault(); // Impede o recarregamento da página
+    event.preventDefault(); // Impede a página de recarregar
 
     if (!email || !senha) {
       alert('Por favor, preencha todos os campos!');
       return;
     }
 
-    // Aqui futuramente entrará o consumo da API de autenticação
     console.log('Dados enviados para a API:', { email, senha });
-    alert(`Login realizado com sucesso para: ${email}`);
+    
+    // Dispara a função que recebemos do App.jsx para mostrar a mensagem moderna
+    if (props.aoLogar) {
+      props.aoLogar(email);
+    }
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.titulo}>Área do Aluno</h2>
-      
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <div style={styles.campo}>
-          <label style={styles.label}>E-mail:</label>
-          <input 
-            type="email" 
-            placeholder="exemplo@senai.com.br"
-            value={email} // O valor do input é rigidamente o que está no estado
-            onChange={(e) => setEmail(e.target.value)} // Atualiza o estado a cada tecla
-            style={styles.input}
-          />
-        </div>
+    <Card 
+      variant="outlined" 
+      sx={{ 
+        maxWidth: 350, 
+        margin: '40px auto', 
+        padding: '10px',
+        boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+        borderRadius: '8px'
+      }}
+    >
+      <CardContent>
+        <Typography 
+          variant="h5" 
+          component="h2" 
+          align="center" 
+          gutterBottom
+          sx={{ color: '#0054a6', fontWeight: 'bold', marginBottom: '20px' }}
+        >
+          Área do Aluno
+        </Typography>
+        
+        {/* Adicionado o onSubmit de volta ao formulário */}
+        <Box component="form" onSubmit={handleSubmit}>
+          <Stack spacing={2.5}>
+            
+            <TextField
+              label="E-mail"
+              type="email"
+              variant="outlined"
+              fullWidth
+              placeholder="exemplo@senai.com.br"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-        <div style={styles.campo}>
-          <label style={styles.label}>Senha:</label>
-          <input 
-            type="password" 
-            placeholder="Digite sua senha"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            style={styles.input}
-          />
-        </div>
+            <TextField
+              label="Senha"
+              type="password"
+              variant="outlined"
+              fullWidth
+              placeholder="Digite sua senha"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+            />
 
-        <button type="submit" style={styles.botao}>
-          Entrar no Sistema
-        </button>
-      </form>
-    </div>
+            {/* O tipo 'submit' faz o botão disparar automaticamente o onSubmit do formulário acima */}
+            <Button 
+              type="submit" 
+              variant="contained" 
+              fullWidth
+              sx={{ 
+                padding: '10px',
+                backgroundColor: '#0054a6',
+                fontWeight: 'bold',
+                fontSize: '16px',
+                marginTop: '10px',
+                '&:hover': {
+                  backgroundColor: '#004080'
+                }
+              }}
+            >
+              Entrar no Sistema
+            </Button>
+
+          </Stack>
+        </Box>
+      </CardContent>
+    </Card>
   );
 }
-
-const styles = {
-  container: {
-    maxWidth: '350px',
-    margin: '40px auto',
-    padding: '20px',
-    border: '1px solid #ccc',
-    borderRadius: '8px',
-    boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-    fontFamily: 'sans-serif'
-  },
-  titulo: {
-    textAlign: 'center',
-    color: '#0054a6',
-    marginBottom: '20px'
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '15px'
-  },
-  campo: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '5px'
-  },
-  label: {
-    fontSize: '14px',
-    fontWeight: 'bold',
-    color: '#333'
-  },
-  input: {
-    padding: '10px',
-    fontSize: '14px',
-    borderRadius: '4px',
-    border: '1px solid #ccc',
-    outline: 'none'
-  },
-  botao: {
-    padding: '12px',
-    backgroundColor: '#0054a6',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    fontSize: '16px',
-    fontWeight: 'bold',
-    marginTop: '10px'
-  }
-};
 
 export default LoginForm;
