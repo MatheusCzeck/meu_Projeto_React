@@ -1,5 +1,5 @@
 {
-  "name": "senai-frontend",
+  "name": "meu-projeto-mui",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -27,10 +27,5 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
     "vite": "^8.0.12"
-  },
-  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
-  "main": "eslint.config.js",
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  }
 }
